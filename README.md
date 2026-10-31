@@ -2,6 +2,8 @@
 
 A lightweight cross-platform disk imaging tool similar to BalenaEtcher, with a modern GUI.
 
+![SimpleEtcher - Flashing Complete](screenshot_flashing.png)
+
 ## Features
 - 🖥️ Modern PyQt5 GUI interface
 - 🔍 Automatic drive detection
@@ -33,6 +35,17 @@ python etcher.py
 2. Select the target drive from the dropdown
 3. Click **Flash** to begin
 4. Wait for the progress bar to complete
+
+## Screenshots
+
+### Initial State
+![Initial State](screenshot_initial.png)
+
+### Image Selected, Ready to Flash
+![Image Selected](screenshot_image_selected.png)
+
+### During Flashing
+![Flashing Progress](screenshot_flashing.png)
 
 ## Platform Support
 - **Windows**: Uses pywin32 for direct drive access
