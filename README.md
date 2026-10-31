@@ -2,6 +2,8 @@
 
 A lightweight cross-platform disk imaging tool similar to BalenaEtcher, with a modern GUI.
 
+🌍 **Available in:** [English](README.md) | [فارسی](README_fa.md)
+
 ![SimpleEtcher - Flashing Complete](screenshot_flashing.png)
 
 ## Features
