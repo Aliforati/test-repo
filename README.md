@@ -4,7 +4,7 @@ A lightweight cross-platform disk imaging tool for flashing OS images to SD card
 
 🌍 **Available in:** [English](README.md) | [فارسی](README_fa.md)
 
-![SimpleEtcher - Flashing Complete](screenshot_flashing_v2.png)
+![EMSYS Flasher - Flashing Complete](screenshot_flashing.png)
 
 ## Features
 - 🖥️ Modern PyQt5 GUI interface with EMSYS branding
@@ -42,16 +42,16 @@ python etcher.py
 ## Screenshots
 
 ### Initial State
-![Initial State](screenshot_initial_v2.png)
+![Initial State](screenshot_initial.png)
 
 ### Image Selected, Ready to Flash
-![Image Selected](screenshot_image_selected_v2.png)
+![Image Selected](screenshot_image_selected.png)
 
 ### During Flashing
-![Flashing Progress](screenshot_flashing_v2.png)
+![Flashing Progress](screenshot_flashing.png)
 
 ### Persian Language Support
-![Persian Interface](screenshot_persian_v2.png)
+![Persian Interface](screenshot_persian.png)
 
 ## Platform Support
 - **Windows**: Uses pywin32 for direct drive access
