@@ -1,37 +1,48 @@
 # SimpleEtcher
 
-A lightweight cross-platform disk imaging tool similar to BalenaEtcher.
+A lightweight cross-platform disk imaging tool similar to BalenaEtcher, with a modern GUI.
 
 ## Features
-- Flash OS images (.iso, .img) to SD cards and USB drives
-- Cross-platform (Windows, Linux, macOS)
-- Progress bar with ETA
-- Drive detection and validation
-- Simple CLI interface
+- 🖥️ Modern PyQt5 GUI interface
+- 🔍 Automatic drive detection
+- 📊 Real-time progress bar
+- 🔄 Background flashing (doesn't block UI)
+- 💾 Flash OS images (.iso, .img) to SD cards and USB drives
+- 🌐 Cross-platform (Windows, Linux, macOS)
 
 ## Installation
 
 ```bash
-pip install pywin32  # Windows only
+pip install PyQt5 pywin32  # Windows: pip install PyQt5 pywin32
+```
+
+Or install all dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
 ## Usage
 
+Launch the GUI:
 ```bash
-# List available drives
-python etcher.py list
-
-# Flash an image to a drive
-python etcher.py flash --image path/to/image.iso --drive /dev/sdb
-
-# On Windows, use the drive letter
-python etcher.py flash --image path/to/image.iso --drive D:
+python etcher.py
 ```
+
+### Steps:
+1. Click **Select Image** and choose your .iso or .img file
+2. Select the target drive from the dropdown
+3. Click **Flash** to begin
+4. Wait for the progress bar to complete
+
+## Platform Support
+- **Windows**: Uses pywin32 for direct drive access
+- **Linux**: Uses `dd` command with progress reporting
+- **macOS**: Uses `dd` command with progress reporting
 
 ## How it works
 
-1. Detects available block devices/drives
-2. Validates image file and target drive
-3. Writes image to drive using platform-specific methods
-4. Shows progress with ETA
-5. Syncs/flushes writes to ensure data is written
+1. Detects available block devices/drives on your system
+2. Validates image file and target drive selection
+3. Writes image to drive using platform-specific methods in a background thread
+4. Shows real-time progress with percentage
+5. Reports success or errors via dialog boxes

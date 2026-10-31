@@ -1,2 +1,2 @@
-rich>=13.0.0
+PyQt5>=5.15.0
 pywin32; sys_platform == "win32"
