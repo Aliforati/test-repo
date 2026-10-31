@@ -40,7 +40,10 @@ def capture_screenshots():
     time.sleep(0.5)
     take_screenshot(window, "screenshot_image_selected.png")
 
-    # Simulate progress
+    # Simulate drive selection and progress
+    window.drive_combo.clear()
+    window.drive_combo.addItem("D: (removable, 14.9 GB)", "D:")
+    window.drive_combo.setCurrentIndex(0)
     window.status_label.setText(t("flashing_status", pct=65))
     window.progress_bar.setValue(65)
     app.processEvents()
@@ -49,8 +52,11 @@ def capture_screenshots():
     time.sleep(0.5)
     take_screenshot(window, "screenshot_flashing.png")
 
-    # Switch to Persian
+    # Switch to Persian with drive selected
     window.change_language(1)  # Index 1 = Persian
+    window.drive_combo.clear()
+    window.drive_combo.addItem("D: (قابل جدا شدن، 14.9 گیگابایت)", "D:")
+    window.drive_combo.setCurrentIndex(0)
     app.processEvents()
 
     # Screenshot 4: Persian language
