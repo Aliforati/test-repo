@@ -7,6 +7,7 @@ Flashes OS images (.iso, .img) to SD cards and USB drives.
 import sys
 import os
 import time
+import json
 import platform
 from datetime import timedelta
 
@@ -30,6 +31,30 @@ except ImportError:
 
 console = Console() if HAS_RICH else None
 
+# Translation system
+TRANSLATIONS = {}
+CURRENT_LANGUAGE = "en"
+
+def load_translations(lang):
+    global CURRENT_LANGUAGE, TRANSLATIONS
+    try:
+        with open(f"translations/{lang}.json", "r", encoding="utf-8") as f:
+            TRANSLATIONS = json.load(f)
+            CURRENT_LANGUAGE = lang
+            return True
+    except Exception as e:
+        print(f"Error loading translations for {lang}: {e}")
+        return False
+
+def t(key, **kwargs):
+    """Translate a key with optional string formatting."""
+    text = TRANSLATIONS.get(key, key)
+    if kwargs:
+        try:
+            text = text.format(**kwargs)
+        except Exception:
+            pass
+    return text
 
 def get_platform():
     """Detect current platform."""
@@ -212,8 +237,8 @@ class EtcherWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("SimpleEtcher")
-        self.setFixedSize(500, 400)
+        self.setWindowTitle(t("app_title"))
+        self.setFixedSize(500, 420)
 
         # State
         self.selected_image = None
@@ -223,19 +248,47 @@ class EtcherWindow(QMainWindow):
         central = QWidget()
         self.setCentralWidget(central)
         layout = QVBoxLayout(central)
-        layout.setSpacing(20)
-        layout.setContentsMargins(30, 30, 30, 30)
+        layout.setSpacing(15)
+        layout.setContentsMargins(30, 25, 30, 25)
 
-        # Title
-        title_label = QLabel("SimpleEtcher")
+        # Title row with language selector
+        title_row = QHBoxLayout()
+        
+        title_label = QLabel(t("app_title"))
         title_font = QFont()
         title_font.setBold(True)
         title_font.setPointSize(24)
         title_label.setFont(title_font)
-        layout.addWidget(title_label)
+        self.title_label = title_label
+        title_row.addWidget(title_label, 1)
+        
+        # Language selector
+        lang_row = QHBoxLayout()
+        lang_label = QLabel(t("language_selector"))
+        lang_label.setStyleSheet("color: #666; font-size: 12px;")
+        self.lang_combo = QComboBox()
+        self.lang_combo.addItems(["English", "فارسی"])
+        self.lang_combo.setCurrentIndex(0 if CURRENT_LANGUAGE == "en" else 1)
+        self.lang_combo.setFixedWidth(90)
+        self.lang_combo.setStyleSheet("""
+            QComboBox {
+                padding: 4px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: white;
+                font-size: 12px;
+            }
+        """)
+        self.lang_combo.currentIndexChanged.connect(self.change_language)
+        lang_row.addWidget(lang_label)
+        lang_row.addWidget(self.lang_combo)
+        title_row.addLayout(lang_row)
+        
+        layout.addLayout(title_row)
 
-        subtitle_label = QLabel("Flash OS images to SD cards and USB drives")
+        subtitle_label = QLabel(t("subtitle"))
         subtitle_label.setStyleSheet("color: #666;")
+        self.subtitle_label = subtitle_label
         layout.addWidget(subtitle_label)
 
         layout.addSpacing(10)
@@ -253,11 +306,11 @@ class EtcherWindow(QMainWindow):
         image_layout = QHBoxLayout(self.image_card)
         image_layout.setContentsMargins(15, 10, 15, 10)
 
-        self.image_label = QLabel("No image selected")
+        self.image_label = QLabel(t("no_image"))
         self.image_label.setStyleSheet("color: #999; font-size: 14px;")
         image_layout.addWidget(self.image_label, 1)
 
-        self.select_image_btn = QPushButton("Select Image")
+        self.select_image_btn = QPushButton(t("select_image_btn"))
         self.select_image_btn.setFixedWidth(120)
         self.select_image_btn.setStyleSheet("""
             QPushButton {
@@ -303,7 +356,7 @@ class EtcherWindow(QMainWindow):
         self.refresh_drives()
         drive_layout.addWidget(self.drive_combo, 1)
 
-        self.flash_btn = QPushButton("Flash")
+        self.flash_btn = QPushButton(t("flash_btn"))
         self.flash_btn.setFixedWidth(100)
         self.flash_btn.setStyleSheet("""
             QPushButton {
@@ -360,9 +413,9 @@ class EtcherWindow(QMainWindow):
 
     def select_image(self):
         file_path, _ = QFileDialog.getOpenFileName(
-            self, "Select Image File",
+            self, t("select_image_dialog_title"),
             "",
-            "Disk Images (*.iso *.img);;All Files (*)"
+            t("image_files_filter")
         )
         if file_path:
             self.selected_image = file_path
@@ -377,7 +430,7 @@ class EtcherWindow(QMainWindow):
 
         drives = list_drives()
         if not drives:
-            self.drive_combo.addItem("No drives found")
+            self.drive_combo.addItem(t("no_drives"))
         else:
             for drive in drives:
                 size = format_size(drive["size"]) if drive["size"] > 0 else "unknown"
@@ -402,8 +455,8 @@ class EtcherWindow(QMainWindow):
 
         # Confirm
         reply = QMessageBox.question(
-            self, "Confirm Flash",
-            f"Flash {os.path.basename(self.selected_image)} to {drive_device}?\n\nThis will erase all data on the drive!",
+            self, t("confirm_flash_title"),
+            t("confirm_flash_msg", image=os.path.basename(self.selected_image), drive=drive_device),
             QMessageBox.Yes | QMessageBox.No,
             QMessageBox.No
         )
@@ -414,7 +467,7 @@ class EtcherWindow(QMainWindow):
         self.select_image_btn.setEnabled(False)
         self.drive_combo.setEnabled(False)
         self.flash_btn.setEnabled(False)
-        self.status_label.setText("Flashing...")
+        self.status_label.setText(t("flashing_status", pct=0))
         self.progress_bar.setValue(0)
 
         # Start worker
@@ -426,8 +479,44 @@ class EtcherWindow(QMainWindow):
     def update_progress(self, pct):
         self.progress_bar.setValue(pct)
         if pct < 100:
-            self.status_label.setText(f"Flashing... {pct}%")
+            self.status_label.setText(t("flashing_status", pct=pct))
 
+    def change_language(self, index):
+        lang = "en" if index == 0 else "fa"
+        load_translations(lang)
+        
+        # Update all UI elements
+        self.setWindowTitle(t("app_title"))
+        self.title_label.setText(t("app_title"))
+        self.subtitle_label.setText(t("subtitle"))
+        self.select_image_btn.setText(t("select_image_btn"))
+        self.flash_btn.setText(t("flash_btn"))
+        
+        if not self.selected_image:
+            self.image_label.setText(t("no_image"))
+        
+        # Update status label with translated key
+        current_pct = self.progress_bar.value()
+        if current_pct < 100:
+            self.status_label.setText(t("flashing_status", pct=current_pct))
+        else:
+            self.status_label.setText(t("flashing_complete"))
+        
+        # Refresh drives to update "No drives found" text
+        self.refresh_drives()
+        
+        # Update language combo display
+        if lang == "en":
+            self.lang_combo.setCurrentIndex(0)
+        else:
+            self.lang_combo.setCurrentIndex(1)
+        
+        # Set RTL layout for Persian
+        if lang == "fa":
+            self.setLayoutDirection(Qt.RightToLeft)
+        else:
+            self.setLayoutDirection(Qt.LeftToRight)
+    
     def flash_finished(self, success, message):
         # Re-enable UI
         self.select_image_btn.setEnabled(True)
@@ -435,18 +524,21 @@ class EtcherWindow(QMainWindow):
         self.flash_btn.setEnabled(True)
 
         if success:
-            self.status_label.setText("✓ " + message)
+            self.status_label.setText(t("flashing_complete"))
             self.status_label.setStyleSheet("color: #4CAF50; font-size: 14px; font-weight: bold;")
-            QMessageBox.information(self, "Success", message)
+            QMessageBox.information(self, t("success_dialog_title"), message)
         else:
-            self.status_label.setText("✗ " + message)
+            self.status_label.setText(t("error_prefix") + message)
             self.status_label.setStyleSheet("color: #f44336; font-size: 14px; font-weight: bold;")
-            QMessageBox.critical(self, "Error", message)
+            QMessageBox.critical(self, t("error_dialog_title"), message)
 
         self.progress_bar.setValue(0)
 
 
 def main():
+    # Load default translations
+    load_translations("en")
+    
     if HAS_QT:
         app = QApplication(sys.argv)
         window = EtcherWindow()

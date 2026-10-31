@@ -3,9 +3,10 @@
 
 import sys
 import os
-from PyQt5.QtWidgets import QApplication, QFileDialog
+import time
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QTimer, Qt
-from etcher import EtcherWindow
+from etcher import EtcherWindow, load_translations, t
 
 def capture_screenshots():
     app = QApplication(sys.argv)
@@ -13,42 +14,36 @@ def capture_screenshots():
     window.show()
     app.processEvents()
 
-    # Screenshot 1: Initial state
-    QTimer.singleShot(500, lambda: take_screenshot(window, "screenshot_initial.png"))
-    
-    # Wait for first screenshot
-    app.processEvents()
-    import time
-    time.sleep(1)
+    # Screenshot 1: Initial state (English)
+    time.sleep(0.5)
+    take_screenshot(window, "screenshot_initial.png")
 
-    # Simulate selecting an image (just set the label text)
+    # Simulate selecting an image
     window.selected_image = "raspberry-pi-os-2024.iso"
     window.image_label.setText("raspberry-pi-os-2024.iso (2.1 GB)")
     window.image_label.setStyleSheet("color: #333; font-size: 14px;")
     app.processEvents()
 
-    # Screenshot 2: Image selected
-    QTimer.singleShot(500, lambda: take_screenshot(window, "screenshot_image_selected.png"))
-    time.sleep(1)
+    # Screenshot 2: Image selected (English)
+    time.sleep(0.5)
+    take_screenshot(window, "screenshot_image_selected.png")
 
     # Simulate progress
-    window.status_label.setText("Flashing... 65%")
+    window.status_label.setText(t("flashing_status", pct=65))
     window.progress_bar.setValue(65)
     app.processEvents()
 
-    # Screenshot 3: During flashing
-    QTimer.singleShot(500, lambda: take_screenshot(window, "screenshot_flashing.png"))
-    time.sleep(1)
+    # Screenshot 3: During flashing (English)
+    time.sleep(0.5)
+    take_screenshot(window, "screenshot_flashing.png")
 
-    # Simulate completion
-    window.status_label.setText("✓ Flashing complete!")
-    window.status_label.setStyleSheet("color: #4CAF50; font-size: 14px; font-weight: bold;")
-    window.progress_bar.setValue(100)
+    # Switch to Persian
+    window.change_language(1)  # Index 1 = Persian
     app.processEvents()
 
-    # Screenshot 4: Complete
-    QTimer.singleShot(500, lambda: take_screenshot(window, "screenshot_complete.png"))
-    time.sleep(1)
+    # Screenshot 4: Persian language
+    time.sleep(0.5)
+    take_screenshot(window, "screenshot_persian.png")
 
     print("Screenshots captured!")
     app.quit()

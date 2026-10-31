@@ -1,0 +1,23 @@
+{
+    "app_title": "سیمپل اچر",
+    "subtitle": "نصب تصاویر سیستم عامل بر روی کارت SD و فلش USB",
+    "select_image_btn": "انتخاب تصویر",
+    "no_image": "هیچ تصویری انتخاب نشده است",
+    "flash_btn": "نصب",
+    "cancel_btn": "لغو",
+    "no_drives": "درایو یافت نشد",
+    "flashing_status": "در حال نصب... {pct}%",
+    "flashing_complete": "✓ نصب کامل شد!",
+    "error_prefix": "✗ ",
+    "select_image_dialog_title": "انتخاب فایل تصویر",
+    "image_files_filter": "تصاویر دیسک (*.iso *.img);;همه فایل‌ها (*)",
+    "confirm_flash_title": "تأیید نصب",
+    "confirm_flash_msg": "آیا مطمئن هستید که می‌خواهید {image} را روی {drive} نصب کنید؟\n\nتمام داده‌های درایو پاک خواهد شد!",
+    "success_dialog_title": "موفقیت",
+    "error_dialog_title": "خطا",
+    "no_image_warning_title": "بدون تصویر",
+    "no_image_warning_msg": "لطفاً ابتدا یک فایل تصویر انتخاب کنید.",
+    "no_drive_warning_title": "بدون درایو",
+    "no_drive_warning_msg": "لطفاً یک درایو مقصد انتخاب کنید.",
+    "language_selector": "زبان"
+}

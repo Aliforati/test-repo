@@ -1,0 +1,23 @@
+{
+    "app_title": "SimpleEtcher",
+    "subtitle": "Flash OS images to SD cards and USB drives",
+    "select_image_btn": "Select Image",
+    "no_image": "No image selected",
+    "flash_btn": "Flash",
+    "cancel_btn": "Cancel",
+    "no_drives": "No drives found",
+    "flashing_status": "Flashing... {pct}%",
+    "flashing_complete": "✓ Flashing complete!",
+    "error_prefix": "✗ ",
+    "select_image_dialog_title": "Select Image File",
+    "image_files_filter": "Disk Images (*.iso *.img);;All Files (*)",
+    "confirm_flash_title": "Confirm Flash",
+    "confirm_flash_msg": "Flash {image} to {drive}?\n\nThis will erase all data on the drive!",
+    "success_dialog_title": "Success",
+    "error_dialog_title": "Error",
+    "no_image_warning_title": "No Image",
+    "no_image_warning_msg": "Please select an image file first.",
+    "no_drive_warning_title": "No Drive",
+    "no_drive_warning_msg": "Please select a target drive.",
+    "language_selector": "Language"
+}

@@ -6,6 +6,7 @@ A lightweight cross-platform disk imaging tool similar to BalenaEtcher, with a m
 
 ## Features
 - 🖥️ Modern PyQt5 GUI interface
+- 🌍 Multi-language support (English & Persian)
 - 🔍 Automatic drive detection
 - 📊 Real-time progress bar
 - 🔄 Background flashing (doesn't block UI)
@@ -46,6 +47,9 @@ python etcher.py
 
 ### During Flashing
 ![Flashing Progress](screenshot_flashing.png)
+
+### Persian Language Support
+![Persian Interface](screenshot_persian.png)
 
 ## Platform Support
 - **Windows**: Uses pywin32 for direct drive access
