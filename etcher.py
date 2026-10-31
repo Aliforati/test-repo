@@ -239,6 +239,14 @@ class EtcherWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle(t("app_title"))
         self.setFixedSize(500, 420)
+        
+        # Set window icon (EMSYS logo)
+        try:
+            from PyQt5.QtGui import QIcon
+            icon = QIcon("assets/emsys_favicon.png")
+            self.setWindowIcon(icon)
+        except Exception:
+            pass
 
         # State
         self.selected_image = None
@@ -255,10 +263,9 @@ class EtcherWindow(QMainWindow):
         title_row = QHBoxLayout()
         
         title_label = QLabel(t("app_title"))
-        title_font = QFont()
-        title_font.setBold(True)
-        title_font.setPointSize(24)
+        title_font = QFont("Segoe UI", 24, QFont.Bold)
         title_label.setFont(title_font)
+        title_label.setStyleSheet("color: #1D2938;")
         self.title_label = title_label
         title_row.addWidget(title_label, 1)
         
@@ -314,7 +321,7 @@ class EtcherWindow(QMainWindow):
         self.select_image_btn.setFixedWidth(120)
         self.select_image_btn.setStyleSheet("""
             QPushButton {
-                background-color: #4a90d9;
+                background-color: #35BA9A;
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -322,7 +329,7 @@ class EtcherWindow(QMainWindow):
                 padding: 8px;
             }
             QPushButton:hover {
-                background-color: #3a7bc8;
+                background-color: #2ea78a;
             }
         """)
         self.select_image_btn.clicked.connect(self.select_image)
@@ -360,7 +367,7 @@ class EtcherWindow(QMainWindow):
         self.flash_btn.setFixedWidth(100)
         self.flash_btn.setStyleSheet("""
             QPushButton {
-                background-color: #4CAF50;
+                background-color: #35BA9A;
                 color: white;
                 border: none;
                 border-radius: 5px;
@@ -369,7 +376,7 @@ class EtcherWindow(QMainWindow):
                 font-size: 16px;
             }
             QPushButton:hover {
-                background-color: #43A047;
+                background-color: #2ea78a;
             }
             QPushButton:disabled {
                 background-color: #ccc;
@@ -402,7 +409,7 @@ class EtcherWindow(QMainWindow):
                 font-weight: bold;
             }
             QProgressBar::chunk {
-                background-color: #4a90d9;
+                background-color: #35BA9A;
                 border-radius: 10px;
             }
         """)

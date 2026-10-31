@@ -1,13 +1,13 @@
-# SimpleEtcher
+# EMSYS Flasher
 
-A lightweight cross-platform disk imaging tool similar to BalenaEtcher, with a modern GUI.
+A lightweight cross-platform disk imaging tool for flashing OS images to SD cards and USB drives. Built by [EMSYS](https://emsys.ir).
 
 🌍 **Available in:** [English](README.md) | [فارسی](README_fa.md)
 
-![SimpleEtcher - Flashing Complete](screenshot_flashing.png)
+![SimpleEtcher - Flashing Complete](screenshot_flashing_v2.png)
 
 ## Features
-- 🖥️ Modern PyQt5 GUI interface
+- 🖥️ Modern PyQt5 GUI interface with EMSYS branding
 - 🌍 Multi-language support (English & Persian)
 - 🔍 Automatic drive detection
 - 📊 Real-time progress bar
@@ -42,16 +42,16 @@ python etcher.py
 ## Screenshots
 
 ### Initial State
-![Initial State](screenshot_initial.png)
+![Initial State](screenshot_initial_v2.png)
 
 ### Image Selected, Ready to Flash
-![Image Selected](screenshot_image_selected.png)
+![Image Selected](screenshot_image_selected_v2.png)
 
 ### During Flashing
-![Flashing Progress](screenshot_flashing.png)
+![Flashing Progress](screenshot_flashing_v2.png)
 
 ### Persian Language Support
-![Persian Interface](screenshot_persian.png)
+![Persian Interface](screenshot_persian_v2.png)
 
 ## Platform Support
 - **Windows**: Uses pywin32 for direct drive access
@@ -65,3 +65,7 @@ python etcher.py
 3. Writes image to drive using platform-specific methods in a background thread
 4. Shows real-time progress with percentage
 5. Reports success or errors via dialog boxes
+
+---
+
+© EMSYS - Data Recovery & Digital Forensics Center | [emsys.ir](https://emsys.ir)

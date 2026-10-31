@@ -13,16 +13,21 @@ from PyQt5.QtWidgets import QApplication
 from etcher import EtcherWindow, load_translations, t
 
 # Load translations before creating window
-load_translations("en")
+ok = load_translations("en")
+print(f"Translations loaded: {ok}")
+print(f"language_selector key: '{t('language_selector')}'")
 
 def capture_screenshots():
     app = QApplication(sys.argv)
     window = EtcherWindow()
     window.show()
-    app.processEvents()
+    
+    # Give the UI time to fully render
+    for _ in range(10):
+        app.processEvents()
+        time.sleep(0.1)
 
     # Screenshot 1: Initial state (English)
-    time.sleep(0.5)
     take_screenshot(window, "screenshot_initial.png")
 
     # Simulate selecting an image
