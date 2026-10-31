@@ -264,8 +264,8 @@ class EtcherWindow(QMainWindow):
         
         # Language selector
         lang_row = QHBoxLayout()
-        lang_label = QLabel(t("language_selector"))
-        lang_label.setStyleSheet("color: #666; font-size: 12px;")
+        self.lang_label = QLabel(t("language_selector"))
+        self.lang_label.setStyleSheet("color: #666; font-size: 12px;")
         self.lang_combo = QComboBox()
         self.lang_combo.addItems(["English", "فارسی"])
         self.lang_combo.setCurrentIndex(0 if CURRENT_LANGUAGE == "en" else 1)
@@ -280,7 +280,7 @@ class EtcherWindow(QMainWindow):
             }
         """)
         self.lang_combo.currentIndexChanged.connect(self.change_language)
-        lang_row.addWidget(lang_label)
+        lang_row.addWidget(self.lang_label)
         lang_row.addWidget(self.lang_combo)
         title_row.addLayout(lang_row)
         
@@ -489,6 +489,7 @@ class EtcherWindow(QMainWindow):
         self.setWindowTitle(t("app_title"))
         self.title_label.setText(t("app_title"))
         self.subtitle_label.setText(t("subtitle"))
+        self.lang_label.setText(t("language_selector"))
         self.select_image_btn.setText(t("select_image_btn"))
         self.flash_btn.setText(t("flash_btn"))
         
