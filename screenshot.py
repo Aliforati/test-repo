@@ -4,9 +4,16 @@
 import sys
 import os
 import time
+
+# Ensure we're in the script's directory before importing
+script_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_dir)
+
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtCore import QTimer, Qt
 from etcher import EtcherWindow, load_translations, t
+
+# Load translations before creating window
+load_translations("en")
 
 def capture_screenshots():
     app = QApplication(sys.argv)
